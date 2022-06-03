@@ -56,6 +56,8 @@ class CreateCog(commands.Cog, name='Create'):
     # @commands.has_any_role('The Bros', 'The Big Hoss')
     # async def create_poll(ctx)
 
+
+
     @commands.command(pass_context=True)
     async def poll(self, ctx, question, *options: str):
         """
@@ -109,6 +111,25 @@ class CreateCog(commands.Cog, name='Create'):
                         voters.append(reactor.id)
         output = f"Poll Results for **{embed.title}**:\n" + '\n'.join(['{}: {}'.format(opt_dict[key], tally[key]) for key in tally.keys()])
         await ctx.send(output)
+
+
+@bot.command()
+@commands.has_any_role('The Bros', 'The Big Hoss')
+async def flag(ctx, message_id):
+    """
+    To flag content that is deemed inappropriate. Owner will be DM'd
+
+    :param: message_id --> message id can be retrieved by clicking the three dots while hovering over a message and clickng "copy id" at the bottom
+    
+    Example: !flag 982082516871675944
+    """
+    msg = await ctx.fetch_message(message_id)
+    flagged_content = (f"{ctx.author.mention} reported {msg.author.mention} as saying:\n```{msg.content}```")
+    user = await bot.fetch_user(532684925208363017)
+    await user.send(flagged_content)
+
+
+    # dm me the content
 
 bot.add_cog(CreateCog(bot))
 bot.add_cog(CommunityCog(bot))
