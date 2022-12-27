@@ -2,6 +2,7 @@
 from decouple import config
 import discord
 
+
 TOKEN = config('DISCORD_TOKEN')
 
 class ManagerBotClient(discord.Client):
@@ -20,10 +21,10 @@ class ManagerBotClient(discord.Client):
         if payload.emoji.name in accepted_reactions:
             role = discord.utils.get(guild.roles, name='Newcomers')
             await payload.member.add_roles(role)
-	    f = open("member_logs.txt","a")
-            f.write(f"Newcomer Role added to {payload.member}")
-            channel = client.get_channel(981026422732783656)
-            await channel.send(f"{payload.member.mention} welcome to the server! We are glad to have you here 🎉")
+        f = open("member_logs.txt","a")
+        f.write(f"Newcomer Role added to {payload.member}")
+        channel = client.get_channel(981026422732783656)
+        await channel.send(f"{payload.member.mention} welcome to the server! We are glad to have you here 🎉")
         
     async def on_ready(self):
         print("Bot Online")
